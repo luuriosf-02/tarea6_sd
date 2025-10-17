@@ -7,11 +7,11 @@ import org.springframework.stereotype.Repository;
 import py.una.pol.sd.model.Producto;
 
 @Repository
-public interface ProductoRepository extends CrudRepository<Producto, Integer> {
+public interface ProductoRepository extends CrudRepository<Producto, Long> {
 
     List<Producto> findAll();
 
     List<Producto> findByNombreContainingIgnoreCase(String nombre);
 
-    Producto findById(long id);
+    Producto findById(Integer id);
 }

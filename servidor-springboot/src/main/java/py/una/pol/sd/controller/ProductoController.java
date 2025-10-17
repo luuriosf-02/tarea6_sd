@@ -30,18 +30,17 @@ public class ProductoController {
 		return "Hola mundo caluroso de Springboot";
 	}
 
-    @GetMapping(value = "/productos", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE} )
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Producto>> getproductos() 
 	{
 		
 		List<Producto> r = productoservice.getProductos();
-
-		return new ResponseEntity<>(r, HttpStatus.OK);
+		return ResponseEntity.ok(r);
     }
 
      // 🔹 Muestra detalles de un producto específico por ID
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Producto> getProductoPorId(@PathVariable("id") Long id) {
+    public ResponseEntity<Producto> getProductoPorId(@PathVariable("id") Integer id) {
         Producto p = productoservice.getProductoPorId(id);
 
         if (p != null) {
@@ -70,7 +69,7 @@ public class ProductoController {
     public ResponseEntity<String> create(@RequestBody Producto p) {
 
 
-		if(p != null && p.getid() != null) {
+		if(p != null && p.getId() != null) {
 			System.out.println("Producto recepcionado "+ p.getNombre());
 			
 			productoservice.crear(p); 

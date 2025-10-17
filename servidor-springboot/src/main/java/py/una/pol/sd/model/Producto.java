@@ -25,7 +25,7 @@ public class Producto {
         id, nombre, stock);
   }
 
-public Integer getid() {
+public Integer getId() {
     return id;
 }
 
@@ -33,11 +33,11 @@ public String getNombre() {
     return nombre;
 }
 
-public Integer getstock() {
+public Integer getStock() {
     return stock;
 }
 
-public void setid(Integer id) {
+public void setId(Integer id) {
     this.id = id;
 }
 
@@ -45,7 +45,7 @@ public void setNombre(String nombre) {
     this.nombre = nombre;
 }
 
-public void setstock(Integer stock) {
+public void setStock(Integer stock) {
     this.stock = stock;
 }
 }

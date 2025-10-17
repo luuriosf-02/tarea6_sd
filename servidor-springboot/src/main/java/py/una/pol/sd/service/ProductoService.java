@@ -17,14 +17,14 @@ public class ProductoService {
   
     public List<Producto> getProductos(){
 
-        return repository.findAll();
+        return (List<Producto>) repository.findAll();
     }
     
     public Producto crear(Producto p){
 
         return repository.save(p);
     }
-    public Producto getProductoPorId(Long id) {
+    public Producto getProductoPorId(Integer id) {
         return repository.findById(id);
     }
 
