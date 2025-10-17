@@ -3,11 +3,8 @@ import configparser
 import requests
 from requests.structures import CaseInsensitiveDict
 
-# =========================
-# CONFIGURACIÓN
-# =========================
 api_productos_url_base = None
-archivo_config = "ConfigFile.properties"
+archivo_config = 'ConfigFile.properties'
 
 config = configparser.RawConfigParser()
 archivos = config.read(archivo_config)
@@ -21,9 +18,6 @@ def cargar_variables():
     print(f"Usando API base: {api_productos_url_base}")
 
 
-# =========================
-# FUNCIONES DE CONSULTA
-# =========================
 def listar():
     """GET /productos - Listar todos los productos"""
     headers = CaseInsensitiveDict()
