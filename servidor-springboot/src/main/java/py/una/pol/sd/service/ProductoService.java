@@ -31,5 +31,22 @@ public class ProductoService {
     public List<Producto> buscarPorNombre(String nombre) {
         return repository.findByNombreContainingIgnoreCase(nombre);
     }
+    public Producto actualizarProducto(Integer id, Producto datosNuevos) {
+        Producto existente = repository.findById(id);
+        if (existente != null) {
+            existente.setNombre(datosNuevos.getNombre());
+            existente.setStock(datosNuevos.getStock());
+            return repository.save(existente);
+        }
+        return null;
+    }
 
+    public boolean eliminarProducto(Integer id) {
+        Producto existente = repository.findById(id);
+        if (existente != null) {
+            repository.delete(existente);
+            return true;
+        }
+        return false;
+    }
 }
