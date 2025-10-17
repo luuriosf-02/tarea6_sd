@@ -1,4 +1,4 @@
-package py.una.pol.sd.repository;
+/*package py.una.pol.sd.repository;
 
 import java.util.List;
 import org.springframework.data.repository.CrudRepository;
@@ -17,3 +17,4 @@ public interface PersonaRepository extends CrudRepository<Persona, Integer> {
 
     Persona findByCedula(long id);
 }
+*/

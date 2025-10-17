@@ -1,4 +1,4 @@
-package py.una.pol.sd.controller;
+/*package py.una.pol.sd.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,14 +31,14 @@ public class PersonaController {
     @GetMapping(value = "/listar", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE} )
     public ResponseEntity<List<Persona>> getPersonas() 
 	{
-		/*List<PersonaDTO> r =  new ArrayList<PersonaDTO>();
+		List<PersonaDTO> r =  new ArrayList<PersonaDTO>();
 		r.add(new PersonaDTO(2000L, "Juan", "Perez"));
 		r.add(new PersonaDTO(2001L, "Pedro", "Alonso"));
 		r.add(new PersonaDTO(2002L, "Maria", "Lopez"));
 		r.add(new PersonaDTO(2003L, "Rosana", "Romero"));
 		r.add(new PersonaDTO(2004L, "Liz", "Santos"));
 		r.add(new PersonaDTO(2005L, "Luis", "Cabral"));
-		*/
+		
 		List<Persona> r = personaService.getPersonas();
 
 		return new ResponseEntity<>(r, HttpStatus.OK);
@@ -67,4 +67,4 @@ public class PersonaController {
 
 
 
-}
+}*/

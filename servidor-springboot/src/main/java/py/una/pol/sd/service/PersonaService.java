@@ -1,4 +1,4 @@
-package py.una.pol.sd.service;
+/*package py.una.pol.sd.service;
 
 import java.util.List;
 
@@ -26,3 +26,4 @@ public class PersonaService {
     }
 
 }
+*/

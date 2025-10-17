@@ -1,12 +1,11 @@
-package py.una.pol.sd.model;
+/*package py.una.pol.sd.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
 
-@Entity
+
+
 public class Persona {
 
-  @Id
+  
   private Integer cedula;
   private String nombre;
   private String apellido;
@@ -53,3 +52,4 @@ public void setApellido(String apellido) {
  
   
 }
+*/
