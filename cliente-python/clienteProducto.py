@@ -3,12 +3,26 @@ import configparser
 import requests
 from requests.structures import CaseInsensitiveDict
 
+<<<<<<< HEAD
+=======
+
+
+# =========================
+# CONFIGURACIÓN
+# =========================
+
+
+
+
+>>>>>>> ce0f60a (Correccion del menu y agregacion de precio)
 api_productos_url_base = None
 archivo_config = 'ConfigFile.properties'
+
 
 config = configparser.RawConfigParser()
 archivos = config.read(archivo_config)
 print("Archivos leídos:", archivos)
+
 
 def cargar_variables():
     global api_productos_url_base
@@ -28,7 +42,7 @@ def listar():
         listado = r.json()
         print("\n📦 LISTADO DE PRODUCTOS:")
         for item in listado:
-            print(f"  ID: {item['id']}, Nombre: {item['nombre']}, Stock: {item.get('stock', 'N/A')}")
+            print(f"  ID: {item['id']}, Nombre: {item['nombre']},  Precio: {item['precio']}, Stock: {item.get('stock', 'N/A')}")
     else:
         print("❌ Error", r.status_code, r.text)
 
@@ -41,7 +55,7 @@ def detalle(id: int):
     r = requests.get(f"{api_productos_url_base}/{id}", headers=headers)
     if r.status_code == 200:
         item = r.json()
-        print(f"\n📋 DETALLE DEL PRODUCTO:\n  ID: {item['id']}\n  Nombre: {item['nombre']}\n  Stock: {item.get('stock', 'N/A')}")
+        print(f"\n📋 DETALLE DEL PRODUCTO:\n  ID: {item['id']}\n  Nombre: {item['nombre']}\n  Precio: {item['precio']}\n  Stock: {item.get('stock', 'N/A')}")
     elif r.status_code == 404:
         print("⚠️ Producto no encontrado.")
     else:
@@ -58,7 +72,7 @@ def buscar(nombre: str):
         listado = r.json()
         print(f"\n🔍 Resultados de búsqueda para '{nombre}':")
         for item in listado:
-            print(f"  ID: {item['id']}, Nombre: {item['nombre']}, Stock: {item.get('stock', 'N/A')}")
+            print(f"  ID: {item['id']}, Nombre: {item['nombre']}, Precio: {item['precio']}, Stock: {item.get('stock', 'N/A')}")
     elif r.status_code == 404:
         print("⚠️ No se encontraron productos con ese nombre.")
     else:
@@ -68,7 +82,7 @@ def buscar(nombre: str):
 # =========================
 # FUNCIONES DE MODIFICACIÓN
 # =========================
-def crear(id: int, nombre: str, stock: int = 0):
+def crear(id: int, nombre: str, precio: int, stock: int = 0):
     """POST /productos/crear - Crear un nuevo producto"""
     headers = CaseInsensitiveDict()
     headers["Accept"] = "application/json"
@@ -77,6 +91,7 @@ def crear(id: int, nombre: str, stock: int = 0):
     datos = {
         'id': id,
         'nombre': nombre,
+        'precio': precio,
         'stock': stock
     }
 
@@ -88,7 +103,7 @@ def crear(id: int, nombre: str, stock: int = 0):
         print("❌ Error", r.status_code, r.text)
 
 
-def actualizar(id: int, nombre: str = None, stock: str = None):
+def actualizar(id: int, nombre: str = None, precio: str = None, stock: str = None):
     """PUT /productos/{id} - Actualizar producto existente"""
     headers = CaseInsensitiveDict()
     headers["Accept"] = "application/json"
@@ -97,6 +112,12 @@ def actualizar(id: int, nombre: str = None, stock: str = None):
     datos = {}
     if nombre is not None and nombre.strip() != "":
         datos['nombre'] = nombre
+    if precio is not None and precio.strip() != "":
+        try:
+            datos['precio'] = float(precio)
+        except ValueError:
+            print("⚠️ El precio debe ser un número.")
+            return
     if stock is not None and stock.strip() != "":
         try:
             datos['stock'] = int(stock)
@@ -170,8 +191,9 @@ def menu():
             try:
                 id = int(input("Ingrese ID del nuevo producto: "))
                 nombre = input("Ingrese nombre: ").strip()
+                precio = int(input("Ingrese precio: "))
                 stock = int(input("Ingrese stock: "))
-                crear(id, nombre, stock)
+                crear(id, nombre, precio, stock)
             except ValueError:
                 print("⚠️ Datos inválidos.")
 
@@ -182,15 +204,31 @@ def menu():
             except ValueError:
                 print("⚠️ El ID debe ser un número.")
                 continue
+            
+            headers = CaseInsensitiveDict()
+            headers["Accept"] = "application/json"
+            r = requests.get(f"{api_productos_url_base}/{id}", headers=headers)
+            if r.status_code != 200:
+                print("⚠️ Producto no encontrado.")
+                continue
 
-            nombre = input("Nuevo nombre (deje vacío si no quiere cambiarlo): ").strip()
-            stock = input("Nuevo stock (deje vacío si no quiere cambiarlo): ").strip()
+            producto_actual = r.json()
+            print(f"\n📋 Datos actuales:")
+            print(f"  Nombre: {producto_actual['nombre']}")
+            print(f"  Precio: {producto_actual['precio']}")
+            print(f"  Stock:  {producto_actual['stock']}")
+
+
+            nombre = input(f"Nuevo nombre [{producto_actual['nombre']}]: ").strip()
+            precio = input(f"Nuevo precio [{producto_actual['precio']}]: ").strip()
+            stock = input(f"Nuevo stock [{producto_actual['stock']}]: ").strip()
 
             # Si no ingresó valor, pasamos None para que la función no modifique ese campo
-            nombre = nombre if nombre != "" else None
-            stock = stock if stock != "" else None
+            nombre = nombre if nombre else producto_actual['nombre']
+            precio = precio if precio else producto_actual['precio']
+            stock = stock if stock else producto_actual['stock']
 
-            actualizar(id, nombre, stock)
+            actualizar(id, nombre, precio, stock)
 
 
         elif opcion == "6":
@@ -211,7 +249,7 @@ def menu():
 # =========================
 # PROCESO PRINCIPAL
 # =========================
-
+print("Secciones encontradas:", config.sections())
 cargar_variables()
 menu()
 print("Finalizando " + datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
