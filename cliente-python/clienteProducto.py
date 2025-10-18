@@ -3,8 +3,7 @@ import configparser
 import requests
 from requests.structures import CaseInsensitiveDict
 
-<<<<<<< HEAD
-=======
+
 
 
 # =========================
@@ -14,7 +13,6 @@ from requests.structures import CaseInsensitiveDict
 
 
 
->>>>>>> ce0f60a (Correccion del menu y agregacion de precio)
 api_productos_url_base = None
 archivo_config = 'ConfigFile.properties'
 
